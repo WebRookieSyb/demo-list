@@ -1,6 +1,7 @@
 const path = require('path')
 const webpack = require('webpack')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
+const UglifyJSPlugin = require('uglifyjs-webpack-plugin')
 
 module.exports = {
     devtool: '#cheap-module-source-map',
@@ -19,12 +20,6 @@ module.exports = {
     module: {
         noParse: /es6-promise\.js$/,
         rules: [
-            {
-                test: /\.(js|vue)/,
-                use: 'eslint-loader',
-                enforce: 'pre',
-                exclude: /node_modules/
-            },
             {
                 test: /\.vue$/,
                 use: {
@@ -79,7 +74,10 @@ module.exports = {
         hints: 'warning'
     },
     plugins: [
-        new webpack.optimize.UglifyJsPlugin({
+        // new webpack.optimize.UglifyJsPlugin({
+        //     compress: { warnings: false }
+        // }),
+        new UglifyJSPlugin({
             compress: { warnings: false }
         }),
         new ExtractTextPlugin({
