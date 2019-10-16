@@ -1,0 +1,16 @@
+<div id="time"></div>
+<script>
+    let timeDiv = document.getElementById('time');
+    let socket = new WebSocket('ws://localhost:9999');
+    //连接成功调用回调
+    socket.onopen = function() {
+        console.log('客户端连接成功')
+        //发送消息
+        socket.send('hello')
+    }
+    //绑定事件是用加属性的方式
+    socket.onmessage = function(event) {
+        timeDiv.innerHTML = event.data;
+        console.log('收到服务端消息', event.data)
+    }
+</script>
