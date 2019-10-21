@@ -64,3 +64,25 @@ function subscribeUserToPush() {
         return pushSubscription;
     })
 }
+
+function sendSubscriptionToBackEnd(subscription) {
+    return fetch('/api/save-subscription', {
+        method: 'POST',
+        headers: {
+            'content-type': 'application/json'
+        },
+        body: JSON.stringify(subscription)
+    })
+    .then(function(response) {
+        if(!response.ok) {
+            throw new Error('bad status code from server');
+        }
+        return response.json();
+    })
+    .then(function(responseData) {
+        if(!(responseData.data && responseData.data.success)) {
+            throw new Error('bad response from server.');
+        }
+    })
+
+}
